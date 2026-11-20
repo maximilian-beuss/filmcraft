@@ -345,7 +345,7 @@ fn attached_display_bounds() -> Option<Vec<DisplayBounds>> {
             .filter_map(|display| {
                 // Keep Windows bounds in physical pixels for scale-aware initial placement.
                 // Correct display-info's Wayland logical bounds when FilmCraft uses XWayland.
-                let scale = display.scale_factor as f32;
+                let scale = display.scale_factor;
                 let (x, y, width, height) =
                     normalized_display_bounds(display.x as f32, display.y as f32, display.width as f32, display.height as f32, scale, correct_wayland_scale)?;
                 if !x.is_finite()
@@ -413,6 +413,7 @@ fn native_window_maximized() -> Option<bool> {
     }
 }
 
+#[cfg_attr(not(target_os = "macos"), allow(dead_code))]
 fn root_window_zoom_state(windows: impl IntoIterator<Item = (String, bool)>, root_title: &str) -> Option<bool> {
     let mut matching = windows.into_iter().filter(|(title, _)| title == root_title);
     let (_, zoomed) = matching.next()?;
