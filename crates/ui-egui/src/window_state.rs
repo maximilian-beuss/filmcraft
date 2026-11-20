@@ -119,6 +119,7 @@ impl WindowState {
         self.position_for_logical_displays(displays)
     }
 
+    #[cfg_attr(target_os = "windows", allow(dead_code))]
     fn position_for_logical_displays(self, displays: &[DisplayBounds]) -> Option<[f32; 2]> {
         let (Some(x), Some(y)) = (self.x, self.y) else { return None };
         let saved = egui::Rect::from_min_size(egui::pos2(x, y), egui::vec2(self.width, self.height));
